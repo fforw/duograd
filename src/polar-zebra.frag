@@ -14,6 +14,11 @@ const float phi = (1.0+sqrt(5.0))/2.0;
 
 out vec4 outColor;
 
+float atan2(in float y, in float x)
+{
+    return abs(x) > abs(y) ? hpi - atan(x,y) : atan(y,x);
+}
+
 ////////////////////// NOISE
 
 //	Simplex 3D Noise
@@ -96,5 +101,14 @@ void main(void)
     vec2 ratio = vec2(0.2);
     vec2 uv = (gl_FragCoord.xy * ratio - .5 * u_resolution.xy * ratio)/min(u_resolution.x, u_resolution.y);
 
-    outColor = vec4(uv, 0,1);
+    float dist = length(uv);
+
+    float r = tau * dist;
+    float time = u_time * 0.1;
+    float time2 = u_time * 0.07;
+
+    float angle = atan2(uv.y, uv.x) + time;
+    float n = snoise(vec3(dist * 200.0, cos(angle) * r, sin(angle) * r) + vec3(0, time, time2)) < 0.0 ? 0.0 : 1.0;
+
+    outColor = vec4(n, n, n,1);
 }
