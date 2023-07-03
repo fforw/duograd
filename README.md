@@ -1,5 +1,3 @@
-# Polar Zebra
+# Duograd
                                          
-Silly shader
-
-[Live demo](https://fforw.github.io/polar-zebra/)
+WIP shader
